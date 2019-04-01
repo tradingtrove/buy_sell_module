@@ -8,15 +8,9 @@ const Account = db.define('account', {
     unique: true,
     allowNull: false,
   },
-  buying_power: {
-    type: Sequelize.DECIMAL(14, 4),
-  },
-  option_level: {
-    type: Sequelize.INTEGER,
-  },
-  watchlist: {
-    type: Sequelize.STRING,
-  },
+  buying_power: Sequelize.DECIMAL(14, 4),
+  option_level: Sequelize.INTEGER,
+  watchlist: Sequelize.STRING,
 });
 
 module.exports = Account;
