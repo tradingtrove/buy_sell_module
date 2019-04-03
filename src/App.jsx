@@ -15,18 +15,27 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      stock: {},
+      stock: {
+        symbol: '0',
+        stopprice: '0',
+        limitprice: '0',
+        quantity: '0',
+        last_extended_hours_trade_price: '0',
+      },
       side: 'buy',
       ordertype: 'stoplimit',
-      stopprice: "",
-      limitprice: "",
+      stopprice: '',
+      limitprice: '',
       quantity: 0,
     };
-
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3000/stocks/tsla')
+    this.getStockData();
+  }
+
+  getStockData() {
+    axios.get('/stocks/tsla')
       .then(res => res.data)
       .then((result) => {
         this.setState({
@@ -36,15 +45,10 @@ class App extends React.Component {
   }
 
   render() {
-    if (Object.keys(this.state.stock).length === 0) {
-      return (<div></div>);
-    }
-
-    const stock = this.state.stock;
     return (
-      <div>
-        <div>Buy { stock.symbol }</div>
-        <div>Sell { stock.symbol }</div>
+      <React.Fragment>
+        <div>Buy { this.state.stock.symbol }</div>
+        <div>Sell { this.state.stock.symbol }</div>
         <div>...</div>
         <form>
           <Input
@@ -79,7 +83,7 @@ class App extends React.Component {
             // onChange={e => this.handleShareChange(e)}
             // onFocus={}
           />
-          <div>Market Price { '$' + stock.last_extended_hours_trade_price.substr(0, stock.last_extended_hours_trade_price.length - 4) }</div>
+          <div>Market Price { '$' + this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4) }</div>
           <div>
             Expiration
             {/* <DisplayContainer /> */}
@@ -90,7 +94,7 @@ class App extends React.Component {
         <div>$1020.45 Buying Power Available</div>
         <button type="submit">Trade TSLA Options</button>
         <button type="submit">Add to Watchlist</button>
-      </div>
+      </React.Fragment>
     );
   }
 }
