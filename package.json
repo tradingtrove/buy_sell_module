@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "db:setup": "node database-mysqldb/seed.js",
     "test": "jest",
-    "test:watch": "jest --watch",    
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors"
   },
   "babel": {
@@ -53,6 +53,7 @@
     "xml-loader": "^1.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
