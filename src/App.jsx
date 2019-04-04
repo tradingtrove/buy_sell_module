@@ -67,7 +67,28 @@ class App extends React.Component {
 
       return `$${inputNum}`;
     }
-    event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+    // event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+    const noChange = event.target.value.substr(0, event.target.value.length - 1);
+    return noChange;
+  }
+
+  handleShareChange(event) {
+    console.log('share input value: ', event.target.value);
+    const reg = /^\d+$/;
+
+    if (reg.test(event.target.value)) {
+      this.setState({
+        quantity: Number(event.target.value),
+      });
+    } else {
+      event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+    }
+
+    if (event.target.value === '') {
+      this.setState({
+        quantity: null,
+      });
+    }
   }
 
   updateStopPrice(event) {
@@ -95,26 +116,6 @@ class App extends React.Component {
       });
     }
   }
-
-  handleShareChange(event) {
-    console.log('share input value: ', event.target.value);
-    const reg = /^\d+$/;
-
-    if (reg.test(event.target.value)) {
-      this.setState({
-        quantity: Number(event.target.value),
-      });
-    } else {
-      event.target.value = event.target.value.substr(0, event.target.value.length - 1);
-    }
-
-    if (event.target.value === '') {
-      this.setState({
-        quantity: null,
-      });
-    }
-  }
-
 
   render() {
     return (
