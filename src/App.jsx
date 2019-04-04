@@ -117,6 +117,7 @@ class App extends React.Component {
           <div>Market Price { '$' + this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4) }</div>
           <div>
             Expiration
+            <DisplayContainer />
           </div>
         </form>
         <div>Estimated Cost/Credit $1,000,000.00</div>
