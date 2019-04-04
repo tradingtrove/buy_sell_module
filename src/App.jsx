@@ -145,6 +145,13 @@ class App extends React.Component {
       return _.includes(this.state.account.watchlist.split(','), symbol);
     };
 
+    let tradeButton;
+    if (this.state.account.option_level > 0) {
+      tradeButton = <button type="submit">Trade {this.state.stock.symbol} Options</button>;
+    } else {
+      tradeButton = <div />;
+    }
+
     return (
       <React.Fragment>
         <div>Buy { this.state.stock.symbol }</div>
@@ -192,7 +199,7 @@ class App extends React.Component {
         </div>
         <button type="submit">Review Order</button>
         <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
-        <button type="submit">Trade TSLA Options</button>
+        {tradeButton}
         <button type="submit">{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
       </React.Fragment>
     );
