@@ -67,8 +67,8 @@ class App extends React.Component {
       });
   }
 
-  handlePriceChange(event) {
-    let inputString = event.target.value; // '$14,239'
+  handlePriceChange(value) {
+    let inputString = value; // '$14,239'
     const reg = /^\d*\.?\d*$/;
 
     if (inputString.length !== 1) {
@@ -84,7 +84,7 @@ class App extends React.Component {
 
       return `$${inputNum}`;
     }
-    const noChange = event.target.value.substr(0, event.target.value.length - 1);
+    const noChange = value.substr(0, value.length - 1);
     return noChange;
   }
 
@@ -115,7 +115,7 @@ class App extends React.Component {
         stopprice: '',
       });
     } else {
-      const newPrice = this.handlePriceChange(event);
+      const newPrice = this.handlePriceChange(event.target.value);
       this.setState({
         stopprice: newPrice,
       });
@@ -128,7 +128,7 @@ class App extends React.Component {
         limitprice: '',
       });
     } else {
-      const newPrice = this.handlePriceChange(event);
+      const newPrice = this.handlePriceChange(event.target.value);
       this.setState({
         limitprice: newPrice,
       });
@@ -186,7 +186,7 @@ class App extends React.Component {
           <div></div>
         </div>
         <button type="submit">Review Order</button>
-        <div>{this.state.side === 'buy' ? '$1020.45 Buying Power Available' : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
+        <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         <button type="submit">Trade TSLA Options</button>
         <button type="submit">Add to Watchlist</button>
       </React.Fragment>
