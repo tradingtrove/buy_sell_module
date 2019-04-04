@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import DisplayContainer from './Dropdown.jsx';
 
 export const Input = ({ label, disabled, onChange, min, name, value, placeholderText }) => (
   <React.Fragment>
@@ -26,12 +27,46 @@ class App extends React.Component {
       ordertype: 'stoplimit',
       stopprice: '',
       limitprice: '',
-      quantity: 0,
+      quantity: null,
     };
+
+    this.handleStopPriceChange = this.handleStopPriceChange.bind(this);
+    this.handleLimitPriceChange = this.handleLimitPriceChange.bind(this);
+    this.handleShareChange = this.handleShareChange.bind(this);
   }
 
   componentDidMount() {
     this.getStockData();
+  }
+
+  handleStopPriceChange(event) {
+    console.log(event.target.value);
+    // this.setState({value: event.target.value});
+  }
+
+  handleLimitPriceChange(event) {
+    console.log(event.target.value);
+    // this.setState({value: event.target.value});
+  }
+
+  handleShareChange(event) {
+    console.log('input value: ', event.target.value);
+    const reg = /^\d+$/;
+
+    if (reg.test(event.target.value)) {
+      this.setState({
+        quantity: Number(event.target.value),
+      });
+    } else {
+      event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+    }
+
+    // for when someone uses a shortcut to clear input field
+    if (event.target.value === '') {
+      this.setState({
+        quantity: null,
+      });
+    }
   }
 
   getStockData() {
@@ -54,7 +89,6 @@ class App extends React.Component {
           <Input
             label="Stop Price"
             name="stop_price"
-            type="text"
             placeholderText="$0.00"
             disabled={false}
             value={`$${this.state.stopprice}`}
@@ -64,7 +98,6 @@ class App extends React.Component {
           <Input
             label="Limit Price"
             name="price"
-            type="text"
             placeholderText="$0.00"
             disabled={false}
             value={`$${this.state.limitprice}`}
@@ -74,19 +107,16 @@ class App extends React.Component {
           <Input
             label="Shares"
             name="quantity"
-            type="number"
             placeholderText="0"
             disabled={false}
-            pattern="[0-9]*"
             value={this.state.quantity}
             min="0"
-            // onChange={e => this.handleShareChange(e)}
+            onChange={e => this.handleShareChange(e)}
             // onFocus={}
           />
           <div>Market Price { '$' + this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4) }</div>
           <div>
             Expiration
-            {/* <DisplayContainer /> */}
           </div>
         </form>
         <div>Estimated Cost/Credit $1,000,000.00</div>
