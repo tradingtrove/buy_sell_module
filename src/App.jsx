@@ -118,6 +118,10 @@ class App extends React.Component {
     }
   }
 
+  // updateEstimatedAmount() {
+
+  // }
+
   render() {
     return (
       <React.Fragment>
@@ -159,7 +163,10 @@ class App extends React.Component {
             <DisplayContainer />
           </div>
         </form>
-        <div>Estimated Cost/Credit $1,000,000.00</div>
+        <div>
+          <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div> 
+          $1,000,000.00
+        </div>
         <button type="submit">Review Order</button>
         <div>$1020.45 Buying Power Available</div>
         <button type="submit">Trade TSLA Options</button>
