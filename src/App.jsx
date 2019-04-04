@@ -23,11 +23,17 @@ class App extends React.Component {
         quantity: '0',
         last_extended_hours_trade_price: '0',
       },
+      account: {
+        buying_power: "",
+        option_level: 0,
+        watchlist: "",
+      },
       side: 'buy',
-      ordertype: 'stoplimit',
+      // ordertype: 'stoplimit',
       stopprice: '',
       limitprice: '',
       quantity: '',
+      estimatedOrderPrice: 0,
     };
 
     this.handlePriceChange = this.handlePriceChange.bind(this);
@@ -38,14 +44,25 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getStockData();
+    this.getAccountData();
   }
 
   getStockData() {
-    axios.get('/stocks/tsla')
+    axios.get('/stocks/aapl')
       .then(res => res.data)
       .then((result) => {
         this.setState({
           stock: result,
+        });
+      });
+  }
+
+  getAccountData() {
+    axios.get('/accounts/2QW30682')
+      .then(res => res.data)
+      .then((result) => {
+        this.setState({
+          account: result,
         });
       });
   }
@@ -118,9 +135,9 @@ class App extends React.Component {
     }
   }
 
-  // updateEstimatedAmount() {
+  updateEstimatedOrderPrice() {
 
-  // }
+  }
 
   render() {
     return (
@@ -164,11 +181,12 @@ class App extends React.Component {
           </div>
         </form>
         <div>
-          <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div> 
+          <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
           $1,000,000.00
+          <div></div>
         </div>
         <button type="submit">Review Order</button>
-        <div>$1020.45 Buying Power Available</div>
+        <div>{this.state.side === 'buy' ? '$1020.45 Buying Power Available' : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         <button type="submit">Trade TSLA Options</button>
         <button type="submit">Add to Watchlist</button>
       </React.Fragment>
