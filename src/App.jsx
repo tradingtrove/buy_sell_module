@@ -18,11 +18,21 @@ class App extends React.Component {
 
     this.state = {
       stock: {
-        symbol: '',
-        stopprice: '0',
-        limitprice: '0',
-        quantity: '0',
+        // symbol: '',
+        // stopprice: '0',
+        // limitprice: '0',
+        // quantity: '0',
+        // last_extended_hours_trade_price: '0',
+        ask_price: '0',
+        ask_size: 0,
+        bid_price: '0',
+        bid_size: 0,
         last_extended_hours_trade_price: '0',
+        last_trade_price: '0',
+        symbol: '',
+        quantity: '0.0000',
+        createdAt: '',
+        updatedAt: '',
       },
       account: {
         buying_power: '',
@@ -30,7 +40,7 @@ class App extends React.Component {
         watchlist: '',
       },
       side: 'buy',
-      // ordertype: 'stoplimit',
+      ordertype: 'market', // market, limit, stoploss, stoplimit
       stopprice: '',
       limitprice: '',
       quantity: '',
@@ -90,25 +100,26 @@ class App extends React.Component {
     return noChange;
   }
 
-  handleShareChange(event) {
+  handleShareChange(value) {
     const reg = /^\d+$/;
 
-    if (reg.test(event.target.value)) {
+    if (reg.test(value)) {
       this.setState({
-        quantity: event.target.value,
+        quantity: value,
       });
     } else {
-      const noChange = event.target.value.substr(0, event.target.value.length - 1);
+      const noChange = value.substr(0, value.length - 1);
       this.setState({
         quantity: noChange,
       });
     }
 
-    if (event.target.value === '') {
+    if (value === '') {
       this.setState({
         quantity: '',
       });
     }
+    setTimeout(() => this.updateEstimatedOrderPrice(), 0);
   }
 
   updateStopPrice(event) {
@@ -135,11 +146,23 @@ class App extends React.Component {
         limitprice: newPrice,
       });
     }
+
+    setTimeout(() => this.updateEstimatedOrderPrice(), 0);
   }
 
-  // updateEstimatedOrderPrice() {
-
-  // }
+  updateEstimatedOrderPrice() {
+    if (this.state.ordertype === 'market' || this.state.ordertype === 'stoploss') {
+      const orderTotal = Math.round(Number(this.state.stock.last_extended_hours_trade_price) * Number(this.state.quantity) * 100) / 100;
+      this.setState({
+        estimatedOrderPrice: orderTotal,
+      });
+    } else {
+      const orderTotal = Math.round(Number(this.state.limitprice.substr(1, this.state.limitprice.length)) * Number(this.state.quantity) * 100) / 100;
+      this.setState({
+        estimatedOrderPrice: orderTotal,
+      });
+    }
+  }
 
   watchlistUpdate() {
     const watchlistArray = this.state.account.watchlist.split(',');
@@ -206,7 +229,7 @@ class App extends React.Component {
             disabled={false}
             value={this.state.quantity}
             min="0"
-            onChange={e => this.handleShareChange(e)}
+            onChange={e => this.handleShareChange(e.target.value)}
             // onFocus={}
           />
           <div>Market Price { '$' + this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4) }</div>
@@ -217,8 +240,7 @@ class App extends React.Component {
         </form>
         <div>
           <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
-          $1,000,000.00
-          <div></div>
+          <div>{this.handlePriceChange(`$${this.state.estimatedOrderPrice}`)}</div>
         </div>
         <button type="submit">Review Order</button>
         <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
