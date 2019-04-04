@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import DisplayContainer from './Dropdown.jsx';
 
 export const Input = ({ label, disabled, onChange, min, name, value, placeholderText }) => (
@@ -17,16 +18,16 @@ class App extends React.Component {
 
     this.state = {
       stock: {
-        symbol: '0',
+        symbol: '',
         stopprice: '0',
         limitprice: '0',
         quantity: '0',
         last_extended_hours_trade_price: '0',
       },
       account: {
-        buying_power: "",
+        buying_power: '',
         option_level: 0,
-        watchlist: "",
+        watchlist: '',
       },
       side: 'buy',
       // ordertype: 'stoplimit',
@@ -140,6 +141,10 @@ class App extends React.Component {
   }
 
   render() {
+    const isWatched = (symbol) => {
+      return _.includes(this.state.account.watchlist.split(','), symbol);
+    };
+
     return (
       <React.Fragment>
         <div>Buy { this.state.stock.symbol }</div>
@@ -188,7 +193,7 @@ class App extends React.Component {
         <button type="submit">Review Order</button>
         <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         <button type="submit">Trade TSLA Options</button>
-        <button type="submit">Add to Watchlist</button>
+        <button type="submit">{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
       </React.Fragment>
     );
   }
