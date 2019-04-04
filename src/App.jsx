@@ -30,43 +30,14 @@ class App extends React.Component {
       quantity: null,
     };
 
-    this.handleStopPriceChange = this.handleStopPriceChange.bind(this);
-    this.handleLimitPriceChange = this.handleLimitPriceChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleShareChange = this.handleShareChange.bind(this);
+    this.updateStopPrice = this.updateStopPrice.bind(this);
+    this.updateLimitPrice = this.updateLimitPrice.bind(this);
   }
 
   componentDidMount() {
     this.getStockData();
-  }
-
-  handleStopPriceChange(event) {
-    console.log(event.target.value);
-    // this.setState({value: event.target.value});
-  }
-
-  handleLimitPriceChange(event) {
-    console.log(event.target.value);
-    // this.setState({value: event.target.value});
-  }
-
-  handleShareChange(event) {
-    console.log('input value: ', event.target.value);
-    const reg = /^\d+$/;
-
-    if (reg.test(event.target.value)) {
-      this.setState({
-        quantity: Number(event.target.value),
-      });
-    } else {
-      event.target.value = event.target.value.substr(0, event.target.value.length - 1);
-    }
-
-    // for when someone uses a shortcut to clear input field
-    if (event.target.value === '') {
-      this.setState({
-        quantity: null,
-      });
-    }
   }
 
   getStockData() {
@@ -78,6 +49,72 @@ class App extends React.Component {
         });
       });
   }
+
+  handlePriceChange(event) {
+    let inputString = event.target.value; // '$14,239'
+    const reg = /^\d*\.?\d*$/;
+
+    if (inputString.length !== 1) {
+      inputString = inputString.substr(1, inputString.length); // '14,239'
+    }
+    inputString = inputString.split(',').join(''); // '14239'
+
+    if (reg.test(inputString)) {
+      let inputNum = inputString.split('.');
+      inputNum[0] = inputNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if (inputNum[1]) inputNum[1] = inputNum[1].substr(0, 4);
+      inputNum = inputNum.join('.');
+
+      return `$${inputNum}`;
+    }
+    event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+  }
+
+  updateStopPrice(event) {
+    if (event.target.value === '') {
+      this.setState({
+        stopprice: '',
+      });
+    } else {
+      const newPrice = this.handlePriceChange(event);
+      this.setState({
+        stopprice: newPrice,
+      });
+    }
+  }
+
+  updateLimitPrice(event) {
+    if (event.target.value === '') {
+      this.setState({
+        limitprice: '',
+      });
+    } else {
+      const newPrice = this.handlePriceChange(event);
+      this.setState({
+        limitprice: newPrice,
+      });
+    }
+  }
+
+  handleShareChange(event) {
+    console.log('share input value: ', event.target.value);
+    const reg = /^\d+$/;
+
+    if (reg.test(event.target.value)) {
+      this.setState({
+        quantity: Number(event.target.value),
+      });
+    } else {
+      event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+    }
+
+    if (event.target.value === '') {
+      this.setState({
+        quantity: null,
+      });
+    }
+  }
+
 
   render() {
     return (
@@ -91,8 +128,8 @@ class App extends React.Component {
             name="stop_price"
             placeholderText="$0.00"
             disabled={false}
-            value={`$${this.state.stopprice}`}
-            // onChange={e => this.handleStopPriceChange(e)}
+            value={this.state.stopprice}
+            onChange={e => this.updateStopPrice(e)}
             // onFocus={}
           />
           <Input
@@ -100,8 +137,8 @@ class App extends React.Component {
             name="price"
             placeholderText="$0.00"
             disabled={false}
-            value={`$${this.state.limitprice}`}
-            // onChange={e => this.handleLimitPriceChange(e)}
+            value={this.state.limitprice}
+            onChange={e => this.updateLimitPrice(e)}
             // onFocus={}
           />
           <Input
