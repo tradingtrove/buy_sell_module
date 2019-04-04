@@ -41,6 +41,7 @@ class App extends React.Component {
     this.handleShareChange = this.handleShareChange.bind(this);
     this.updateStopPrice = this.updateStopPrice.bind(this);
     this.updateLimitPrice = this.updateLimitPrice.bind(this);
+    this.watchlistUpdate = this.watchlistUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -136,8 +137,30 @@ class App extends React.Component {
     }
   }
 
-  updateEstimatedOrderPrice() {
+  // updateEstimatedOrderPrice() {
 
+  // }
+
+  watchlistUpdate() {
+    const watchlistArray = this.state.account.watchlist.split(',');
+    const currentSymbol = this.state.stock.symbol;
+    const newAccount = this.state.account;
+
+    if (_.includes(watchlistArray, currentSymbol)) {
+      _.pull(watchlistArray, currentSymbol);
+      const newWatchlist = watchlistArray.join(',');
+      newAccount.watchlist = newWatchlist;
+      this.setState({
+        account: newAccount,
+      });
+    } else {
+      watchlistArray.push(currentSymbol);
+      const newWatchlist = watchlistArray.join(',');
+      newAccount.watchlist = newWatchlist;
+      this.setState({
+        account: newAccount,
+      });
+    }
   }
 
   render() {
@@ -200,7 +223,7 @@ class App extends React.Component {
         <button type="submit">Review Order</button>
         <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         {tradeButton}
-        <button type="submit">{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
+        <button type="submit" onClick={this.watchlistUpdate}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
       </React.Fragment>
     );
   }
