@@ -199,18 +199,22 @@ class App extends React.Component {
         if (props.text === 'Market Order') {
           this.setState({
             ordertype: 'market',
+            ordertypeclicked: !this.state.ordertypeclicked,
           });
         } else if (props.text === 'Limit Order') {
           this.setState({
             ordertype: 'limit',
+            ordertypeclicked: !this.state.ordertypeclicked,
           });
         } else if (props.text === 'Stop Loss Order') {
           this.setState({
             ordertype: 'stoploss',
+            ordertypeclicked: !this.state.ordertypeclicked,
           });
         } else {
           this.setState({
             ordertype: 'stoplimit',
+            ordertypeclicked: !this.state.ordertypeclicked,
           });
         }
       };
