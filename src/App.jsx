@@ -49,6 +49,8 @@ class App extends React.Component {
     this.updateLimitPrice = this.updateLimitPrice.bind(this);
     this.updateWatchlist = this.updateWatchlist.bind(this);
     this.orderTypeMenuClick = this.orderTypeMenuClick.bind(this);
+    this.updateToBuySide = this.updateToBuySide.bind(this);
+    this.updateToSellSide = this.updateToSellSide.bind(this);
   }
 
   componentDidMount() {
@@ -189,12 +191,35 @@ class App extends React.Component {
     }
   }
 
+  updateToBuySide() {
+    this.setState({
+      side: 'buy',
+    });
+  }
+
+  updateToSellSide() {
+    this.setState({
+      side: 'sell',
+    });
+  }
+
   render() {
     const isWatched = (symbol) => {
       return _.includes(this.state.account.watchlist.split(','), symbol);
     };
 
-    const ButtonComponent = (props) => {
+    let sellButton;
+    if (Number(this.state.stock.quantity) > 0) {
+      sellButton = (
+        <div>
+          <button type="button" onClick={this.updateToSellSide}>Sell { this.state.stock.symbol }</button>
+        </div>
+      );
+    } else {
+      sellButton = <div />;
+    }
+
+    const OrderTypeButtonComponent = (props) => {
       const handleClick = () => {
         if (props.text === 'Market Order') {
           this.setState({
@@ -229,10 +254,10 @@ class App extends React.Component {
       orderType = (
         <div>
           <div>Order Type</div>
-          <ButtonComponent text="Market Order" />
-          <ButtonComponent text="Limit Order" />
-          <ButtonComponent text="Stop Loss Order" />
-          <ButtonComponent text="Stop Limit Order" />
+          <OrderTypeButtonComponent text="Market Order" />
+          <OrderTypeButtonComponent text="Limit Order" />
+          <OrderTypeButtonComponent text="Stop Loss Order" />
+          <OrderTypeButtonComponent text="Stop Limit Order" />
         </div>
       );
     } else {
@@ -310,8 +335,8 @@ class App extends React.Component {
 
     return (
       <React.Fragment>
-        <div>Buy { this.state.stock.symbol }</div>
-        <div>Sell { this.state.stock.symbol }</div>
+        <div><button type="button" onClick={this.updateToBuySide}>Buy { this.state.stock.symbol }</button></div>
+        {sellButton}
         <div>
           <button onClick={this.orderTypeMenuClick} type="button" style={{ border: 'none', outline: 'none', cursor: 'pointer' }}>
             <svg width="28" height="28" viewBox="0 0 28 28">
