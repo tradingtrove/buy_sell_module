@@ -198,14 +198,12 @@ class App extends React.Component {
       tradeButton = <div />;
     }
 
-    return (
-      <React.Fragment>
-        <div>Buy { this.state.stock.symbol }</div>
-        <div>Sell { this.state.stock.symbol }</div>
-        <div>...</div>
-        <form>
+    let stopPriceRow;
+    if (this.state.ordertype === 'stoploss' || this.state.ordertype === 'stoplimit') {
+      stopPriceRow = (
+        <label>
+          <div>Stop Price</div>
           <Input
-            label="Stop Price"
             name="stop_price"
             placeholderText="$0.00"
             disabled={false}
@@ -213,8 +211,18 @@ class App extends React.Component {
             onChange={e => this.updateStopPrice(e)}
             // onFocus={}
           />
+        </label>
+      );
+    } else {
+      stopPriceRow = <div />;
+    }
+
+    let limitPriceRow;
+    if (this.state.ordertype === 'limit' || this.state.ordertype === 'stoplimit') {
+      limitPriceRow = (
+        <label>
+          <div>Limit Price</div>
           <Input
-            label="Limit Price"
             name="price"
             placeholderText="$0.00"
             disabled={false}
@@ -222,30 +230,79 @@ class App extends React.Component {
             onChange={e => this.updateLimitPrice(e)}
             // onFocus={}
           />
-          <Input
-            label="Shares"
-            name="quantity"
-            placeholderText="0"
-            disabled={false}
-            value={this.state.quantity}
-            min="0"
-            onChange={e => this.handleShareChange(e.target.value)}
-            // onFocus={}
-          />
-          <div>Market Price { '$' + this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4) }</div>
+        </label>
+      );
+    } else {
+      limitPriceRow = <div />;
+    }
+
+    let marketPriceRow;
+    if (this.state.ordertype === 'market') {
+      marketPriceRow = (
+        <label>
+          <div>Market Price</div>
+          <div>{ `$${this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4)}` }</div>
+        </label>
+      );
+    } else {
+      marketPriceRow = <div />;
+    }
+
+    let expirationRow;
+    if (this.state.ordertype === 'limit' || this.state.ordertype === 'stoploss' || this.state.ordertype === 'stoplimit') {
+      expirationRow = (
+        <label>
+          <div>Expiration</div>
+          <DisplayContainer />
+        </label>
+      );
+    } else {
+      expirationRow = <div />;
+    }
+
+    return (
+      <React.Fragment>
+        <div>Buy { this.state.stock.symbol }</div>
+        <div>Sell { this.state.stock.symbol }</div>
+        <div>...</div>
+        <form>
           <div>
-            Expiration
-            <DisplayContainer />
+            {stopPriceRow}
           </div>
+          <div>
+            {limitPriceRow}
+          </div>
+          <div>
+            <label>
+              <div>Shares</div>
+              <Input
+                name="quantity"
+                placeholderText="0"
+                disabled={false}
+                value={this.state.quantity}
+                min="0"
+                onChange={e => this.handleShareChange(e.target.value)}
+                // onFocus={}
+              />
+            </label>
+          </div>
+          <div>
+            {marketPriceRow}
+          </div>
+          <div>
+            {expirationRow}
+          </div>
+          <div>
+            <label>
+              <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
+              <div>{this.handlePriceChange(`$${this.state.estimatedOrderPrice}`)}</div>
+            </label>
+          </div>
+          <button type="submit">Review Order</button>
+          <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         </form>
-        <div>
-          <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
-          <div>{this.handlePriceChange(`$${this.state.estimatedOrderPrice}`)}</div>
-        </div>
-        <button type="submit">Review Order</button>
-        <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
-        {tradeButton}
-        <button type="submit" onClick={this.watchlistUpdate}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button>
+        <div>{tradeButton}</div>
+        <div><button type="submit" onClick={this.watchlistUpdate}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button></div>
       </React.Fragment>
     );
   }
