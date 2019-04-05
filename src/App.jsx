@@ -18,11 +18,6 @@ class App extends React.Component {
 
     this.state = {
       stock: {
-        // symbol: '',
-        // stopprice: '0',
-        // limitprice: '0',
-        // quantity: '0',
-        // last_extended_hours_trade_price: '0',
         ask_price: '0',
         ask_size: 0,
         bid_price: '0',
@@ -45,13 +40,15 @@ class App extends React.Component {
       limitprice: '',
       quantity: '',
       estimatedOrderPrice: 0,
+      ordertypeclicked: false,
     };
 
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleShareChange = this.handleShareChange.bind(this);
     this.updateStopPrice = this.updateStopPrice.bind(this);
     this.updateLimitPrice = this.updateLimitPrice.bind(this);
-    this.watchlistUpdate = this.watchlistUpdate.bind(this);
+    this.updateWatchlist = this.updateWatchlist.bind(this);
+    this.orderTypeMenuClick = this.orderTypeMenuClick.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +74,12 @@ class App extends React.Component {
           account: result,
         });
       });
+  }
+
+  orderTypeMenuClick() {
+    this.setState({
+      ordertypeclicked: !this.state.ordertypeclicked,
+    });
   }
 
   handlePriceChange(value) {
@@ -164,7 +167,7 @@ class App extends React.Component {
     }
   }
 
-  watchlistUpdate() {
+  updateWatchlist() {
     const watchlistArray = this.state.account.watchlist.split(',');
     const currentSymbol = this.state.stock.symbol;
     const newAccount = this.state.account;
@@ -190,6 +193,47 @@ class App extends React.Component {
     const isWatched = (symbol) => {
       return _.includes(this.state.account.watchlist.split(','), symbol);
     };
+
+    const ButtonComponent = (props) => {
+      const handleClick = () => {
+        if (props.text === 'Market Order') {
+          this.setState({
+            ordertype: 'market',
+          });
+        } else if (props.text === 'Limit Order') {
+          this.setState({
+            ordertype: 'limit',
+          });
+        } else if (props.text === 'Stop Loss Order') {
+          this.setState({
+            ordertype: 'stoploss',
+          });
+        } else {
+          this.setState({
+            ordertype: 'stoplimit',
+          });
+        }
+      };
+
+      return (
+        <button type="button" onClick={handleClick}>{props.text}</button>
+      );
+    };
+
+    let orderType;
+    if (this.state.ordertypeclicked) {
+      orderType = (
+        <div>
+          <div>Order Type</div>
+          <ButtonComponent text="Market Order" />
+          <ButtonComponent text="Limit Order" />
+          <ButtonComponent text="Stop Loss Order" />
+          <ButtonComponent text="Stop Limit Order" />
+        </div>
+      );
+    } else {
+      orderType = <div />;
+    }
 
     let tradeButton;
     if (this.state.account.option_level > 0) {
@@ -264,7 +308,13 @@ class App extends React.Component {
       <React.Fragment>
         <div>Buy { this.state.stock.symbol }</div>
         <div>Sell { this.state.stock.symbol }</div>
-        <div>...</div>
+        <div>
+          <button onClick={this.orderTypeMenuClick} type="button" style={{ border: 'none', outline: 'none', cursor: 'pointer' }}>
+            <svg width="28" height="28" viewBox="0 0 28 28">
+              <path fillRule="evenodd" d="M14,16 C12.8954305,16 12,15.1045695 12,14 C12,12.8954305 12.8954305,12 14,12 C15.1045695,12 16,12.8954305 16,14 C16,15.1045695 15.1045695,16 14,16 Z M6,16 C4.8954305,16 4,15.1045695 4,14 C4,12.8954305 4.8954305,12 6,12 C7.1045695,12 8,12.8954305 8,14 C8,15.1045695 7.1045695,16 6,16 Z M22,16 C20.8954305,16 20,15.1045695 20,14 C20,12.8954305 20.8954305,12 22,12 C23.1045695,12 24,12.8954305 24,14 C24,15.1045695 23.1045695,16 22,16 Z"></path>
+            </svg>
+          </button>
+        </div>
         <form>
           <div>
             {stopPriceRow}
@@ -302,7 +352,8 @@ class App extends React.Component {
           <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         </form>
         <div>{tradeButton}</div>
-        <div><button type="submit" onClick={this.watchlistUpdate}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button></div>
+        <div><button type="submit" onClick={this.updateWatchlist}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button></div>
+        {orderType}
       </React.Fragment>
     );
   }
