@@ -206,7 +206,13 @@ class App extends React.Component {
     };
 
     let sellButton;
-    if (Number(this.state.stock.quantity) > 0) {
+    if (Number(this.state.stock.quantity) > 0 && this.state.side === 'sell') {
+      sellButton = (
+        <div>
+          <button className="clicked-tab" type="button" onClick={this.updateToSellSide}>Sell { this.state.stock.symbol }</button>
+        </div>
+      );
+    } else if (Number(this.state.stock.quantity) > 0) {
       sellButton = (
         <div>
           <button type="button" onClick={this.updateToSellSide}>Sell { this.state.stock.symbol }</button>
@@ -214,6 +220,21 @@ class App extends React.Component {
       );
     } else {
       sellButton = <div />;
+    }
+
+    let buyButton;
+    if (this.state.side === 'buy') {
+      buyButton = (
+        <div>
+          <button className="clicked-tab" type="button" onClick={this.updateToBuySide}>Buy { this.state.stock.symbol }</button>
+        </div>
+      );
+    } else {
+      buyButton = (
+        <div>
+          <button type="button" onClick={this.updateToBuySide}>Buy { this.state.stock.symbol }</button>
+        </div>
+      );
     }
 
     const OrderTypeButtonComponent = (props) => {
@@ -340,9 +361,9 @@ class App extends React.Component {
       <React.Fragment>
         <form>
           <header>
-            <div><button className="test" type="button" onClick={this.updateToBuySide}>Buy { this.state.stock.symbol }</button></div>
+            {buyButton}
             {sellButton}
-            <div>
+            <div className="menu">
               <button onClick={this.orderTypeMenuClick} type="button">
                 <svg width="28" height="28" viewBox="0 0 28 28">
                   <path fillRule="evenodd" d="M14,16 C12.8954305,16 12,15.1045695 12,14 C12,12.8954305 12.8954305,12 14,12 C15.1045695,12 16,12.8954305 16,14 C16,15.1045695 15.1045695,16 14,16 Z M6,16 C4.8954305,16 4,15.1045695 4,14 C4,12.8954305 4.8954305,12 6,12 C7.1045695,12 8,12.8954305 8,14 C8,15.1045695 7.1045695,16 6,16 Z M22,16 C20.8954305,16 20,15.1045695 20,14 C20,12.8954305 20.8954305,12 22,12 C23.1045695,12 24,12.8954305 24,14 C24,15.1045695 23.1045695,16 22,16 Z"></path>

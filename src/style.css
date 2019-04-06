@@ -16,26 +16,53 @@ form {
   border-radius: 2px;
 }
 
-form button {
-  font-family: 'DINProRegular';
-  color: #171718;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-}
-
 header {
   padding-right: 24px;
   padding-left: 24px;
   display: flex;
   border-bottom: 1px solid #f5f5f6;
   height: 52px;
+  align-items: flex-end;
 }
 
-header div {
-  text-align: start;
+header div button {
+  font-family: 'DINProRegular';
+  color: #171718;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  border: none;
+  height: 55px;
+  padding-top: 12px;
+  text-align: left;
+  outline: none;
+  padding: 0px;
+  margin-right: 12px;
+  border-bottom: 2px solid #ffffff;
+  letter-spacing: normal;
+  -o-transition:.3s;
+  -ms-transition:.3s;
+  -moz-transition:.3s;
+  -webkit-transition:.3s;
+  transition:.3s;
+}
+
+header div button:hover {
+  color: #20ce99;
+}
+
+.menu {
+  margin-left: auto;
+}
+
+.menu button {
+  margin-right: 0px;
+  height: 48px;
+}
+
+.clicked-tab {
+  color: #20ce99;
+  border-bottom: 2px solid #20ce99;
 }
 
 main {
@@ -74,12 +101,6 @@ input:focus {
   background-color: #ffffff;
 }
 
-.stopprice,
-.limitprice,
-.shares {
-  /* padding-right: 12px; */
-}
-
 .stopprice label,
 .limitprice label,
 .shares label {
@@ -91,7 +112,6 @@ input:focus {
 .stoppriceLabel, 
 .limitpriceLabel, 
 .sharesLabel {
-  font-weight: 600;
   margin: auto 0px;
 }
 
