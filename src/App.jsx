@@ -3,11 +3,8 @@ import axios from 'axios';
 import _ from 'lodash';
 import DisplayContainer from './Dropdown.jsx';
 
-export const Input = ({ label, disabled, onChange, min, name, value, placeholderText }) => (
+export const Input = ({ disabled, onChange, min, name, value, placeholderText }) => (
   <React.Fragment>
-    <label>
-      {label}
-    </label>
     <input autoComplete="off" min={min} disabled={disabled} name={name} type="text" value={value} placeholder={placeholderText} onChange={onChange} />
   </React.Fragment>
 );
@@ -274,17 +271,19 @@ class App extends React.Component {
     let stopPriceRow;
     if (this.state.ordertype === 'stoploss' || this.state.ordertype === 'stoplimit') {
       stopPriceRow = (
-        <label>
-          <div>Stop Price</div>
-          <Input
-            name="stop_price"
-            placeholderText="$0.00"
-            disabled={false}
-            value={this.state.stopprice}
-            onChange={e => this.updateStopPrice(e)}
-            // onFocus={}
-          />
-        </label>
+        <div className="stopprice">
+          <label>
+            <div className="stoppriceLabel">Stop Price</div>
+            <Input
+              name="stop_price"
+              placeholderText="$0.00"
+              disabled={false}
+              value={this.state.stopprice}
+              onChange={e => this.updateStopPrice(e)}
+              // onFocus={}
+            />
+          </label>
+        </div>
       );
     } else {
       stopPriceRow = <div />;
@@ -293,17 +292,19 @@ class App extends React.Component {
     let limitPriceRow;
     if (this.state.ordertype === 'limit' || this.state.ordertype === 'stoplimit') {
       limitPriceRow = (
-        <label>
-          <div>Limit Price</div>
-          <Input
-            name="price"
-            placeholderText="$0.00"
-            disabled={false}
-            value={this.state.limitprice}
-            onChange={e => this.updateLimitPrice(e)}
-            // onFocus={}
-          />
-        </label>
+        <div className="limitprice">
+          <label>
+            <div className="limitpriceLabel">Limit Price</div>
+            <Input
+              name="price"
+              placeholderText="$0.00"
+              disabled={false}
+              value={this.state.limitprice}
+              onChange={e => this.updateLimitPrice(e)}
+              // onFocus={}
+            />
+          </label>
+        </div>
       );
     } else {
       limitPriceRow = <div />;
@@ -312,10 +313,12 @@ class App extends React.Component {
     let marketPriceRow;
     if (this.state.ordertype === 'market') {
       marketPriceRow = (
-        <label>
-          <div>Market Price</div>
-          <div>{ `$${this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4)}` }</div>
-        </label>
+        <div className="marketprice">
+          <label>
+            <div className="marketpriceLabel">Market Price</div>
+            <div className="marketpriceAmount">{ `$${this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4)}` }</div>
+          </label>
+        </div>
       );
     } else {
       marketPriceRow = <div />;
@@ -348,15 +351,11 @@ class App extends React.Component {
             </div>
           </header>
           <main>
-            <div>
-              {stopPriceRow}
-            </div>
-            <div>
-              {limitPriceRow}
-            </div>
-            <div>
+            {stopPriceRow}
+            {limitPriceRow}
+            <div className="shares">
               <label>
-                <div>Shares</div>
+                <div className="sharesLabel">Shares</div>
                 <Input
                   name="quantity"
                   placeholderText="0"
@@ -368,16 +367,14 @@ class App extends React.Component {
                 />
               </label>
             </div>
-            <div>
-              {marketPriceRow}
-            </div>
+            {marketPriceRow}
             <div>
               {expirationRow}
             </div>
             <div className="estimate">
               <label>
-                <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
-                <div>{this.handlePriceChange(`$${this.state.estimatedOrderPrice.toFixed(2)}`)}</div>
+                <div className="estimateLabel">{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
+                <div className="estimateAmount">{this.handlePriceChange(`$${this.state.estimatedOrderPrice.toFixed(2)}`)}</div>
               </label>
             </div>
             <button className="reviewBtn" type="submit">Review Order</button>
