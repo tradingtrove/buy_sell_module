@@ -168,6 +168,7 @@ input:focus {
   font-family: 'DINProRegular';
   color: #fdfefe;
   background-color: #20ce99;
+  border: none;
   outline: none;
   border-radius: 4px;
   cursor: pointer;
