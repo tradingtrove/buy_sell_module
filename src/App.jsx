@@ -163,7 +163,7 @@ class App extends React.Component {
         estimatedOrderPrice: orderTotal,
       });
     } else {
-      const orderTotal = Math.round(Number(this.state.limitprice.substr(1, this.state.limitprice.length)) * Number(this.state.quantity) * 100) / 100;
+      const orderTotal = Math.round(Number((this.state.limitprice.substr(1, this.state.limitprice.length).split(',').join(''))) * Number(this.state.quantity) * 100) / 100;
       this.setState({
         estimatedOrderPrice: orderTotal,
       });
