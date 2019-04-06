@@ -372,33 +372,35 @@ class App extends React.Component {
             </div>
           </header>
           <main>
-            {stopPriceRow}
-            {limitPriceRow}
-            <div className="shares">
-              <label>
-                <div className="sharesLabel">Shares</div>
-                <Input
-                  name="quantity"
-                  placeholderText="0"
-                  disabled={false}
-                  value={this.state.quantity}
-                  min="0"
-                  onChange={e => this.handleShareChange(e.target.value)}
-                  // onFocus={}
-                />
-              </label>
+            <div className="fields">
+              {stopPriceRow}
+              {limitPriceRow}
+              <div className="shares">
+                <label>
+                  <div className="sharesLabel">Shares</div>
+                  <Input
+                    name="quantity"
+                    placeholderText="0"
+                    disabled={false}
+                    value={this.state.quantity}
+                    min="0"
+                    onChange={e => this.handleShareChange(e.target.value)}
+                    // onFocus={}
+                  />
+                </label>
+              </div>
+              {marketPriceRow}
+              <div>
+                {expirationRow}
+              </div>
+              <div className="estimate">
+                <label>
+                  <div className="estimateLabel">{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
+                  <div className="estimateAmount">{this.handlePriceChange(`$${this.state.estimatedOrderPrice.toFixed(2)}`)}</div>
+                </label>
+              </div>
+              <button className="reviewBtn" type="submit">Review Order</button>
             </div>
-            {marketPriceRow}
-            <div>
-              {expirationRow}
-            </div>
-            <div className="estimate">
-              <label>
-                <div className="estimateLabel">{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
-                <div className="estimateAmount">{this.handlePriceChange(`$${this.state.estimatedOrderPrice.toFixed(2)}`)}</div>
-              </label>
-            </div>
-            <button className="reviewBtn" type="submit">Review Order</button>
           </main>
           <div className="tail">
             <div className="tailMessage">{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
