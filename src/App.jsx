@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import DisplayContainer from './Dropdown.jsx';
+import btn from './style.css';
 
 export const Input = ({ label, disabled, onChange, min, name, value, placeholderText }) => (
   <React.Fragment>
@@ -335,16 +336,18 @@ class App extends React.Component {
 
     return (
       <React.Fragment>
-        <div><button type="button" onClick={this.updateToBuySide}>Buy { this.state.stock.symbol }</button></div>
-        {sellButton}
-        <div>
-          <button onClick={this.orderTypeMenuClick} type="button" style={{ border: 'none', outline: 'none', cursor: 'pointer' }}>
-            <svg width="28" height="28" viewBox="0 0 28 28">
-              <path fillRule="evenodd" d="M14,16 C12.8954305,16 12,15.1045695 12,14 C12,12.8954305 12.8954305,12 14,12 C15.1045695,12 16,12.8954305 16,14 C16,15.1045695 15.1045695,16 14,16 Z M6,16 C4.8954305,16 4,15.1045695 4,14 C4,12.8954305 4.8954305,12 6,12 C7.1045695,12 8,12.8954305 8,14 C8,15.1045695 7.1045695,16 6,16 Z M22,16 C20.8954305,16 20,15.1045695 20,14 C20,12.8954305 20.8954305,12 22,12 C23.1045695,12 24,12.8954305 24,14 C24,15.1045695 23.1045695,16 22,16 Z"></path>
-            </svg>
-          </button>
-        </div>
         <form>
+          <header>
+            <div><button className="test" type="button" onClick={this.updateToBuySide}>Buy { this.state.stock.symbol }</button></div>
+            {sellButton}
+            <div>
+              <button onClick={this.orderTypeMenuClick} type="button">
+                <svg width="28" height="28" viewBox="0 0 28 28">
+                  <path fillRule="evenodd" d="M14,16 C12.8954305,16 12,15.1045695 12,14 C12,12.8954305 12.8954305,12 14,12 C15.1045695,12 16,12.8954305 16,14 C16,15.1045695 15.1045695,16 14,16 Z M6,16 C4.8954305,16 4,15.1045695 4,14 C4,12.8954305 4.8954305,12 6,12 C7.1045695,12 8,12.8954305 8,14 C8,15.1045695 7.1045695,16 6,16 Z M22,16 C20.8954305,16 20,15.1045695 20,14 C20,12.8954305 20.8954305,12 22,12 C23.1045695,12 24,12.8954305 24,14 C24,15.1045695 23.1045695,16 22,16 Z"></path>
+                </svg>
+              </button>
+            </div>
+          </header>
           <div>
             {stopPriceRow}
           </div>
