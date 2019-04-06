@@ -267,7 +267,7 @@ class App extends React.Component {
 
     let tradeButton;
     if (this.state.account.option_level > 0) {
-      tradeButton = <button type="submit">Trade {this.state.stock.symbol} Options</button>;
+      tradeButton = <button type="submit" className="outerBtn">Trade {this.state.stock.symbol} Options</button>;
     } else {
       tradeButton = <div />;
     }
@@ -383,8 +383,10 @@ class App extends React.Component {
           <button type="submit">Review Order</button>
           <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         </form>
-        <div>{tradeButton}</div>
-        <div><button type="submit" onClick={this.updateWatchlist}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button></div>
+        <footer>
+          <div>{tradeButton}</div>
+          <div><button type="submit" className="outerBtn" onClick={this.updateWatchlist}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button></div>
+        </footer>
         {orderType}
       </React.Fragment>
     );

@@ -2,3 +2,60 @@
   font-family: "DINProRegular";
   src: url("/fonts/DINProRegular.otf") format("opentype");
 }
+
+form {
+  background-color: white;
+  font-family: 'DINProRegular';
+  width: 227px;
+  padding-right: 24px;
+  padding-left: 24px;
+  margin: 5px 0px 0px 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.01), 0px 3px 24px 0px rgba(0,0,0,0.1);
+  border-radius: 2px;
+}
+
+form button {
+  font-family: 'DINProRegular';
+  color: #171718;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+header {
+  display: flex;
+  border-bottom: 1px solid #f5f5f6;
+  height: 52px;
+}
+
+header div {
+  text-align: start;
+}
+
+footer {
+  font-family: 'DINProRegular';
+  width: 227px;
+  padding-right: 24px;
+  padding-left: 24px;
+  margin-top: 24px;
+}
+
+.outerBtn {
+  font-family: 'DINProRegular';
+  color: #20ce99;
+  outline: none;
+  border: 1px solid #20ce99;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+  height: 48px;
+  width: 227px;
+  margin-bottom: 12px;
+  white-space: nowrap;
+  text-align: center;
+}
+
