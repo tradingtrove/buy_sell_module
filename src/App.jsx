@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import DisplayContainer from './Dropdown.jsx';
-import btn from './style.css';
 
 export const Input = ({ label, disabled, onChange, min, name, value, placeholderText }) => (
   <React.Fragment>
@@ -348,40 +347,44 @@ class App extends React.Component {
               </button>
             </div>
           </header>
-          <div>
-            {stopPriceRow}
+          <main>
+            <div>
+              {stopPriceRow}
+            </div>
+            <div>
+              {limitPriceRow}
+            </div>
+            <div>
+              <label>
+                <div>Shares</div>
+                <Input
+                  name="quantity"
+                  placeholderText="0"
+                  disabled={false}
+                  value={this.state.quantity}
+                  min="0"
+                  onChange={e => this.handleShareChange(e.target.value)}
+                  // onFocus={}
+                />
+              </label>
+            </div>
+            <div>
+              {marketPriceRow}
+            </div>
+            <div>
+              {expirationRow}
+            </div>
+            <div className="estimate">
+              <label>
+                <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
+                <div>{this.handlePriceChange(`$${this.state.estimatedOrderPrice.toFixed(2)}`)}</div>
+              </label>
+            </div>
+            <button className="reviewBtn" type="submit">Review Order</button>
+          </main>
+          <div className="tail">
+            <div className="tailMessage">{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
           </div>
-          <div>
-            {limitPriceRow}
-          </div>
-          <div>
-            <label>
-              <div>Shares</div>
-              <Input
-                name="quantity"
-                placeholderText="0"
-                disabled={false}
-                value={this.state.quantity}
-                min="0"
-                onChange={e => this.handleShareChange(e.target.value)}
-                // onFocus={}
-              />
-            </label>
-          </div>
-          <div>
-            {marketPriceRow}
-          </div>
-          <div>
-            {expirationRow}
-          </div>
-          <div>
-            <label>
-              <div>{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
-              <div>{this.handlePriceChange(`$${this.state.estimatedOrderPrice}`)}</div>
-            </label>
-          </div>
-          <button type="submit">Review Order</button>
-          <div>{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
         </form>
         <footer>
           <div>{tradeButton}</div>

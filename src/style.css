@@ -3,13 +3,15 @@
   src: url("/fonts/DINProRegular.otf") format("opentype");
 }
 
+body {
+  margin: 10px 0px 0px 10px;
+  font-size: 13px;
+}
+
 form {
   background-color: white;
   font-family: 'DINProRegular';
-  width: 227px;
-  padding-right: 24px;
-  padding-left: 24px;
-  margin: 5px 0px 0px 5px;
+  width: 275px;
   box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.01), 0px 3px 24px 0px rgba(0,0,0,0.1);
   border-radius: 2px;
 }
@@ -25,6 +27,8 @@ form button {
 }
 
 header {
+  padding-right: 24px;
+  padding-left: 24px;
   display: flex;
   border-bottom: 1px solid #f5f5f6;
   height: 52px;
@@ -32,6 +36,59 @@ header {
 
 header div {
   text-align: start;
+}
+
+main {
+  padding-right: 24px;
+  padding-left: 24px;
+  border-bottom: 1px solid #f5f5f6;
+}
+
+
+.estimate {
+  border-top: 1px solid #f5f5f6;
+  height: 48px;
+}
+
+.estimate label {
+  display: flex;
+}
+
+/* .estimate {
+
+} */
+
+.tail {
+  padding-right: 24px;
+  padding-left: 24px;
+  display: flex;
+  height: 48px;
+}
+
+.tailMessage {
+  margin: auto;
+  text-align: center;
+  line-height: 19px;
+  font-weight: 400;
+  font-size: 13px;
+  font-family: 'DINProRegular';
+}
+
+.reviewBtn {
+  font-family: 'DINProRegular';
+  color: #fdfefe;
+  background-color: #20ce99;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  height: 48px;
+  width: 227px;
+  margin: 12px 0px 24px 0px;
+  white-space: nowrap;
+  text-align: center;
 }
 
 footer {
@@ -50,7 +107,7 @@ footer {
   border-radius: 4px;
   cursor: pointer;
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: 0.25px;
   height: 48px;
   width: 227px;
@@ -58,4 +115,6 @@ footer {
   white-space: nowrap;
   text-align: center;
 }
+
+
 
