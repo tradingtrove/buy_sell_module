@@ -5,8 +5,38 @@ class DisplayContainer extends React.Component {
   constructor(...args){
     super(...args);
     this.handleSelection = this.handleSelection.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.clicked = this.clicked.bind(this);
     this.state = {
-      displayValue: 'Good for Day'
+      displayValue: 'Good for Day',
+      clicked: false,
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  clicked() {
+    this.setState({
+      clicked: !this.state.clicked,
+    });
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  handleClickOutside(event){
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({
+        clicked: !this.state.clicked,
+      });
     }
   }
 
@@ -20,9 +50,29 @@ class DisplayContainer extends React.Component {
       { display: 'Good for Day', value: 0 },
       { display: 'Good till Canceled', value: 1 }
     ];
+
+    let dropdown;
+    if (this.state.clicked) {
+      dropdown = (
+        <div ref={this.setWrapperRef}>
+          <div className='clicked dropdown-width' onClick={this.clicked}>
+            <DropDown options={listItems} value={this.state.displayValue} onClick={this.handleSelection} />
+          </div>
+        </div>
+      );
+    } else {
+      dropdown = (
+        <div ref={this.setWrapperRef}>
+          <div className='notclicked dropdown-width' onClick={this.clicked}>
+            <DropDown options={listItems} value={this.state.displayValue} onClick={this.handleSelection} />
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div className='dropdown-width'>
-        <DropDown options={listItems} value={this.state.displayValue} onClick={this.handleSelection} />
+      <div>
+        {dropdown}
       </div>
     );
   }

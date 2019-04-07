@@ -311,7 +311,6 @@ class App extends React.Component {
               disabled={false}
               value={this.state.stopprice}
               onChange={e => this.updateStopPrice(e)}
-              // onFocus={}
             />
           </label>
         </div>
@@ -332,7 +331,6 @@ class App extends React.Component {
               disabled={false}
               value={this.state.limitprice}
               onChange={e => this.updateLimitPrice(e)}
-              // onFocus={}
             />
           </label>
         </div>
@@ -358,10 +356,12 @@ class App extends React.Component {
     let expirationRow;
     if (this.state.ordertype === 'limit' || this.state.ordertype === 'stoploss' || this.state.ordertype === 'stoplimit') {
       expirationRow = (
-        <label>
-          <div>Expiration</div>
-          <DisplayContainer />
-        </label>
+        <div className="expiration">
+          <label>
+            <div className="expirationLabel">Expiration</div>
+            <DisplayContainer />
+          </label>
+        </div>
       );
     } else {
       expirationRow = <div />;
@@ -411,22 +411,19 @@ class App extends React.Component {
                     value={this.state.quantity}
                     min="0"
                     onChange={e => this.handleShareChange(e.target.value)}
-                    // onFocus={}
                   />
                 </label>
               </div>
               {marketPriceRow}
-              <div>
-                {expirationRow}
-              </div>
+              {expirationRow}
               <div className="estimate">
                 <label>
                   <div className="estimateLabel">{this.state.side === 'buy' ? 'Estimated Cost' : 'Estimated Credit'}</div>
                   <div className="estimateAmount">{this.handlePriceChange(`$${this.state.estimatedOrderPrice.toFixed(2)}`)}</div>
                 </label>
               </div>
-              <button className="reviewBtn" type="submit">Review Order</button>
             </div>
+            <button className="reviewBtn" type="submit">Review Order</button>
           </main>
           <div className="tail">
             <div className="tailMessage">{this.state.side === 'buy' ? `${this.handlePriceChange(`$${Math.round(Number(this.state.account.buying_power) * 100) / 100}`)} Buying Power Available` : `${Math.round(this.state.stock.quantity)} Shares Available`}</div>
