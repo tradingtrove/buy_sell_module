@@ -262,20 +262,30 @@ class App extends React.Component {
         }
       };
 
+      let currentOrder = props.text.split(' ');
+      currentOrder = currentOrder.splice(0, currentOrder.length - 1).join('').toLowerCase();
+
+
+      if (this.state.ordertype === currentOrder) {
+        return <button className="active" type="button" onClick={handleClick}>{props.text}</button>;
+      }
+
       return (
-        <button type="button" onClick={handleClick}>{props.text}</button>
+        <button className="inactive" type="button" onClick={handleClick}>{props.text}</button>
       );
     };
 
     let orderType;
     if (this.state.ordertypeclicked) {
       orderType = (
-        <div>
-          <div>Order Type</div>
-          <OrderTypeButtonComponent text="Market Order" />
-          <OrderTypeButtonComponent text="Limit Order" />
-          <OrderTypeButtonComponent text="Stop Loss Order" />
-          <OrderTypeButtonComponent text="Stop Limit Order" />
+        <div className="ordertypedropdown">
+          <div className="ordertypeheader">Order Type</div>
+          <div className="ordertypeoptions">
+            <OrderTypeButtonComponent text="Market Order" />
+            <OrderTypeButtonComponent text="Limit Order" />
+            <OrderTypeButtonComponent text="Stop Loss Order" />
+            <OrderTypeButtonComponent text="Stop Limit Order" />
+          </div> 
         </div>
       );
     } else {
@@ -369,6 +379,7 @@ class App extends React.Component {
                   <path fillRule="evenodd" d="M14,16 C12.8954305,16 12,15.1045695 12,14 C12,12.8954305 12.8954305,12 14,12 C15.1045695,12 16,12.8954305 16,14 C16,15.1045695 15.1045695,16 14,16 Z M6,16 C4.8954305,16 4,15.1045695 4,14 C4,12.8954305 4.8954305,12 6,12 C7.1045695,12 8,12.8954305 8,14 C8,15.1045695 7.1045695,16 6,16 Z M22,16 C20.8954305,16 20,15.1045695 20,14 C20,12.8954305 20.8954305,12 22,12 C23.1045695,12 24,12.8954305 24,14 C24,15.1045695 23.1045695,16 22,16 Z"></path>
                 </svg>
               </button>
+              {orderType}
             </div>
           </header>
           <main>
@@ -410,7 +421,6 @@ class App extends React.Component {
           <div>{tradeButton}</div>
           <div><button type="submit" className="outerBtn" onClick={this.updateWatchlist}>{isWatched(this.state.stock.symbol) ? 'Remove from Watchlist' : 'Add to Watchlist'}</button></div>
         </footer>
-        {orderType}
       </React.Fragment>
     );
   }
