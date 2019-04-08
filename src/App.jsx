@@ -56,7 +56,8 @@ class App extends React.Component {
   }
 
   getStockData() {
-    axios.get('/stocks/aapl')
+    const ticker = window.location.pathname.split('/')[2];
+    axios.get(`/api/stocks/${ticker}`)
       .then(res => res.data)
       .then((result) => {
         this.setState({
