@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "db:setup": "node database-mysqldb/seed.js",
     "test": "jest",
-    "test:watch": "jest --watch",    
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors"
   },
   "babel": {
@@ -53,12 +53,15 @@
     "xml-loader": "^1.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "mysql2": "^1.6.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "request": "^2.88.0",
     "sequelize": "^5.2.3"
   }
