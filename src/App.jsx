@@ -48,11 +48,30 @@ class App extends React.Component {
     this.orderTypeMenuClick = this.orderTypeMenuClick.bind(this);
     this.updateToBuySide = this.updateToBuySide.bind(this);
     this.updateToSellSide = this.updateToSellSide.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
   }
 
   componentDidMount() {
     this.getStockData();
     this.getAccountData();
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  handleClickOutside(event){
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({
+        ordertypeclicked: false,
+      });
+    }
   }
 
   getStockData() {
@@ -279,7 +298,7 @@ class App extends React.Component {
     let orderType;
     if (this.state.ordertypeclicked) {
       orderType = (
-        <div className="ordertypedropdown">
+        <div className="ordertypedropdown" ref={this.setWrapperRef}>
           <div className="ordertypeheader">Order Type</div>
           <div className="ordertypeoptions">
             <OrderTypeButtonComponent text="Market Order" />

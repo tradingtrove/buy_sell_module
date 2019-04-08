@@ -178,12 +178,11 @@ input:focus {
   height: 34px;
   display: flex;
   align-items: center;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -o-transition:.2s;
   -ms-transition:.2s;
   -moz-transition:.2s;
@@ -225,12 +224,11 @@ input:focus {
   cursor: pointer;
   margin: auto 0px;
   width: 130px;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .__item:hover {
@@ -319,10 +317,14 @@ footer {
   text-align: center;
 }
 
+.outerBtn:hover {
+  border: 1px solid #13eaa9;
+  color: #13eaa9;
+}
+
 .ordertypedropdown {
   position: absolute;
-  top: 48px;
-  right: -48px;
+  margin-left: -104px;
   background-color: white;
   font-family: 'DINProRegular';
   width: 180px;
@@ -331,11 +333,6 @@ footer {
   color: #171718;
   display: flex;
   flex-direction: column;
-  -o-transition:.1s;
-  -ms-transition:.1s;
-  -moz-transition:.1s;
-  -webkit-transition:.1s;
-  transition:.1s;
   z-index: 1;
 }
 
