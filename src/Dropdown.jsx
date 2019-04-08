@@ -24,7 +24,7 @@ class DisplayContainer extends React.Component {
 
   clicked() {
     this.setState({
-      clicked: !this.state.clicked,
+      clicked: true,
     });
   }
 
@@ -35,7 +35,7 @@ class DisplayContainer extends React.Component {
   handleClickOutside(event){
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
       this.setState({
-        clicked: !this.state.clicked,
+        clicked: false,
       });
     }
   }
