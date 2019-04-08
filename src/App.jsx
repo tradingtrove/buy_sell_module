@@ -320,7 +320,22 @@ class App extends React.Component {
     }
 
     let stopPriceRow;
-    if (this.state.ordertype === 'stoploss' || this.state.ordertype === 'stoplimit') {
+    if (this.state.ordertype === 'stoploss') {
+      stopPriceRow = (
+        <div className="stopprice">
+          <label>
+            <div className="stoppriceLabel focusprice">Stop Price</div>
+            <Input
+              name="stop_price"
+              placeholderText="$0.00"
+              disabled={false}
+              value={this.state.stopprice}
+              onChange={e => this.updateStopPrice(e)}
+            />
+          </label>
+        </div>
+      );
+    } else if (this.state.ordertype === 'stoplimit') {
       stopPriceRow = (
         <div className="stopprice">
           <label>
@@ -344,7 +359,7 @@ class App extends React.Component {
       limitPriceRow = (
         <div className="limitprice">
           <label>
-            <div className="limitpriceLabel">Limit Price</div>
+            <div className="limitpriceLabel focusprice">Limit Price</div>
             <Input
               name="price"
               placeholderText="$0.00"
@@ -364,7 +379,7 @@ class App extends React.Component {
       marketPriceRow = (
         <div className="marketprice">
           <label>
-            <div className="marketpriceLabel">Market Price</div>
+            <div className="marketpriceLabel focusprice">Market Price</div>
             <div className="marketpriceAmount">{ `$${this.state.stock.last_extended_hours_trade_price.substr(0, this.state.stock.last_extended_hours_trade_price.length - 4)}` }</div>
           </label>
         </div>

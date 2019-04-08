@@ -39,6 +39,6 @@ describe('Input component is valid', () => {
 
   it('Input component has a label element', () => {
     const { InputComponent } = setup();
-    expect(InputComponent.find('label').exists()).toBe(true);
+    expect(InputComponent.find('input').exists()).toBe(true);
   });
 });

@@ -167,6 +167,10 @@ input:focus {
   margin: auto 0px;
 }
 
+.focusprice {
+  color: #20ce99;
+}
+
 .__control {
   position: relative;
   border: 1px solid #fafafa;
