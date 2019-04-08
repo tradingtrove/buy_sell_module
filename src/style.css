@@ -14,6 +14,7 @@ form {
   width: 275px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(48, 51, 51, 0.09);
   border-radius: 2px;
+  letter-spacing: 0.25px;
 }
 
 header {
@@ -169,6 +170,7 @@ input:focus {
 
 .focusprice {
   color: #20ce99;
+  font-weight: 900;
 }
 
 .__control {
@@ -338,6 +340,11 @@ footer {
   display: flex;
   flex-direction: column;
   z-index: 1;
+  -o-transition:.2s;
+  -ms-transition:.2s;
+  -moz-transition:.2s;
+  -webkit-transition:.2s;
+  transition: z-index .2s ease-in;
 }
 
 .ordertypeheader {
