@@ -67,7 +67,7 @@ class App extends React.Component {
   }
 
   getAccountData() {
-    axios.get('/accounts/2QW30682')
+    axios.get('/api/accounts/2QW30682')
       .then(res => res.data)
       .then((result) => {
         this.setState({

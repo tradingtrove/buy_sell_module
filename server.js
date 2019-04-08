@@ -18,7 +18,7 @@ app.get('/api/stocks/:ticker', (req, res) => {
     });
 });
 
-app.get('/accounts/:account_number', (req, res) => {
+app.get('/api/accounts/:account_number', (req, res) => {
   controller.getAccountInfo(req.params.account_number)
     .then((account) => {
       res.status(200);
