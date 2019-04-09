@@ -9,7 +9,7 @@ export const Input = ({ disabled, onChange, min, name, value, placeholderText })
   </React.Fragment>
 );
 
-class App extends React.Component {
+class BuySell extends React.Component {
   constructor(props) {
     super(props);
 
@@ -473,4 +473,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default BuySell;
