@@ -1221,7 +1221,7 @@ const insertSampleStockData = () => {
 
 const sampleAccount = {
   account_number: '2QW30682',
-  buying_power: '48642291.2050',
+  buying_power: '486422.2050',
   option_level: 3,
   watchlist: 'FB,TSLA,SQ,AAPL,MSFT,BABA,V,JPM,BAC',
 };

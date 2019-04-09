@@ -26,4 +26,4 @@ app.get('/api/accounts/:account_number', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('App listening on port 3000!\n'));
+app.listen(3002, () => console.log('BuySell server listening on port 3002!\n'));
