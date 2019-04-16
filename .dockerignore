@@ -1,4 +1,5 @@
+.gitignore
 node_modules
-dist/bundle.js
 buysellmodule.pem
 .DS_Store
+.git
