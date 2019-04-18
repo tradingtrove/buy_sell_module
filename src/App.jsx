@@ -23,8 +23,6 @@ class BuySell extends React.Component {
         last_trade_price: '0',
         symbol: '',
         quantity: '0.0000',
-        createdAt: '',
-        updatedAt: '',
       },
       account: {
         buying_power: '',

@@ -23,7 +23,7 @@ app.use('/stocks/:ticker', express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.json());
 
 app.get('/api/stocks/:ticker', (req, res) => {
-  controller.getStockInfo(req.params.ticker)
+  controller.getStockInfo(req.params.ticker.toUpperCase())
     .then((stockData) => {
       res.status(200);
       res.send(stockData);

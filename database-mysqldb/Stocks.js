@@ -27,7 +27,7 @@ const Stock = db.define('stock', {
     allowNull: false,
   },
   symbol: {
-    type: Sequelize.STRING(5),
+    type: Sequelize.STRING(6),
     primaryKey: true,
     unique: true,
   },
