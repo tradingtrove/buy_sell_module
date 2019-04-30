@@ -1,21 +1,22 @@
+require('newrelic');
 const bodyParser = require('body-parser');
 const path = require('path');
 const express = require('express');
-const fs = require('fs');
+// const fs = require('fs');
 const controller = require('./controller');
 
 const app = express();
 
-app.get('*.js', (request, response, next) => {
-  if (fs.existsSync(request.url + '.br')) {
-    request.url += '.br';
-    response.set('Content-Encoding', 'br');
-  } else if (fs.existsSync(request.url + '.gz')) {
-    request.url += '.gz';
-    response.set('Content-Encoding', 'gzip');
-  }
-  next();
-});
+// app.get('*.js', (request, response, next) => {
+//   if (fs.existsSync(request.url + '.br')) {
+//     request.url += '.br';
+//     response.set('Content-Encoding', 'br');
+//   } else if (fs.existsSync(request.url + '.gz')) {
+//     request.url += '.gz';
+//     response.set('Content-Encoding', 'gzip');
+//   }
+//   next();
+// });
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -27,6 +28,9 @@ app.get('/api/stocks/:ticker', (req, res) => {
     .then((stockData) => {
       res.status(200);
       res.send(stockData);
+    })
+    .catch(() => {
+      console.log('BAD REQUEST');
     });
 });
 
